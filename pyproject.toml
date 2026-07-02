@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "recc"
+version = "0.1.0"
+description = "Reverse-Engineer Claude Code: an open-source Claude Code clone (recc-agent) plus an inspector CLI (recc)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Saieshwar" }]
+keywords = ["claude", "claude-code", "ai-agents", "llm", "cli", "coding-agent"]
+dependencies = ["anthropic>=0.40.0"]
+
+[project.urls]
+Homepage = "https://github.com/SaieshwarTech/reverse-engineering-claude-code"
+
+[project.scripts]
+recc = "recc_cli.inspector:main"
+recc-agent = "recc_cli.agent:main"
+
+[tool.setuptools]
+packages = ["recc_cli"]

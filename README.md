@@ -28,43 +28,80 @@ Claude Code ships as an obfuscated bundle, but its behavior, its open-source fou
 
 ## 🧭 How it fits together
 
-```
-            ┌──────────────────────────────────────────────────────┐
-            │                   YOU (terminal)                      │
-            └───────────────────────┬──────────────────────────────┘
-                                    │ prompt
-                    ┌───────────────▼───────────────┐
-                    │        Terminal UI (Ink)       │  render, permission prompts
-                    └───────────────┬───────────────┘
-                                    │
-   ┌────────────────────────────────▼────────────────────────────────┐
-   │                        THE AGENT LOOP                            │
-   │                                                                  │
-   │   assemble context ──► POST /v1/messages ──► model streams       │
-   │        ▲                (system + tools +      text / tool_use    │
-   │        │                 full history)              │             │
-   │        │                                            ▼             │
-   │        │            ┌──────────────┐   permit?  ┌──────────┐     │
-   │        └────────────┤ tool_result  │◄───────────┤ execute  │     │
-   │                     └──────────────┘   (ch.5)   │  tool    │     │
-   │                          loop until no tool calls└─────────┘     │
-   └───────┬───────────────────────┬──────────────────────┬──────────┘
-           │                       │                       │
-   ┌───────▼──────┐        ┌───────▼───────┐       ┌───────▼────────┐
-   │  TOOL LAYER  │        │  CONTEXT ENGINE│       │  SECURITY      │
-   │ Read Edit    │        │ system prompt  │       │ permission     │
-   │ Bash Grep    │        │ CLAUDE.md      │       │  rules+modes   │
-   │ Task WebFetch│        │ compaction     │       │ hooks, sandbox │
-   │ MCP  Skill   │        │ prompt caching │       │ (ch. 5)        │
-   │ (ch. 3)      │        │ (ch. 4)        │       │                │
-   └──────────────┘        └────────────────┘       └────────────────┘
-           │
-   ┌───────▼───────────────────────────────────────────────────────┐
-   │  STATE ON DISK  ~/.claude/  — settings, JSONL transcripts,     │
-   │  todos, memory, skills, agents  (ch. 9)                        │
-   └───────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    U([👤 You · terminal]) -->|prompt| UI[Terminal UI · render + permission prompts]
 
-   Observe the whole thing:  proxy the API (ch. 8) + read ~/.claude/ (ch. 9)
+    subgraph LOOP["🔁 The Agent Loop — ch. 2"]
+        direction TB
+        CTX[Assemble context<br/>system + tools + full history]
+        API{{POST /v1/messages<br/>model streams}}
+        DEC[text or tool_use?]
+        EXEC[Execute tool]
+        RES[tool_result]
+        CTX --> API --> DEC
+        DEC -->|tool_use| EXEC --> RES --> CTX
+    end
+
+    UI --> CTX
+    DEC -->|text, no tools| OUT([Final answer])
+
+    EXEC -.permit?.-> SEC
+    CTX -.reads.-> CE
+    EXEC -.uses.-> TL
+
+    TL["🧰 Tool Layer — ch. 3<br/>Read · Write · Edit<br/>Bash · Grep · Glob<br/>Task · WebFetch · MCP · Skill"]
+    CE["🧠 Context Engine — ch. 4<br/>system prompt · CLAUDE.md<br/>compaction · prompt caching"]
+    SEC["🛡️ Security — ch. 5<br/>permission rules + modes<br/>hooks · sandbox"]
+    DISK[("💾 State on disk — ch. 9<br/>~/.claude/ · settings<br/>JSONL transcripts · memory")]
+
+    LOOP --- DISK
+
+    classDef loop fill:#1e3a8a,stroke:#3B82F6,stroke-width:2px,color:#fff
+    classDef tools fill:#134e4a,stroke:#14b8a6,color:#fff
+    classDef ctx fill:#4c1d95,stroke:#a78bfa,color:#fff
+    classDef sec fill:#7f1d1d,stroke:#ef4444,color:#fff
+    classDef disk fill:#092d3a,stroke:#22d3ee,color:#fff
+    classDef io fill:#09090B,stroke:#3B82F6,color:#fff
+    class CTX,API,DEC,EXEC,RES loop
+    class TL tools
+    class CE ctx
+    class SEC sec
+    class DISK disk
+    class U,UI,OUT io
+```
+
+> **Observe the whole thing yourself:** proxy the API (ch. 8) + read `~/.claude/` (ch. 9).
+
+## ⚔️ recc-agent vs. Claude Code
+
+`recc-agent` (this repo's clone) shares Claude Code's real skeleton; the rest of Claude Code
+is polish layered on the same core. Each gap maps to a chapter you can read, then build.
+
+```mermaid
+flowchart LR
+    subgraph OC["🐾 recc-agent · this repo"]
+        direction TB
+        A1[Agent loop ✅]
+        A2[Read/Write/Edit/Bash/Grep/Glob ✅]
+        A3[Permission prompts + hard blocks ✅]
+        A4[Streaming + token/cost meter ✅]
+        A5[CLAUDE.md + session resume ✅]
+    end
+    subgraph CC["🧭 Claude Code · production"]
+        direction TB
+        B1[Everything in recc-agent]
+        B2[Rich TUI]
+        B3[Sandboxed Bash]
+        B4[Subagents · MCP · Skills · Hooks]
+        B5[Prompt caching · compaction]
+    end
+    OC ==>|"add features, one chapter at a time"| CC
+
+    classDef oc fill:#134e4a,stroke:#14b8a6,color:#fff
+    classDef cc fill:#1e3a8a,stroke:#3B82F6,color:#fff
+    class A1,A2,A3,A4,A5 oc
+    class B1,B2,B3,B4,B5 cc
 ```
 
 ## 📖 The Guide
@@ -108,13 +145,22 @@ chapter 7 mini-agent grown into something usable. It has the agent loop, a full 
 hard-blocked dangerous commands, streaming output, `CLAUDE.md` context, a live token/cost
 meter, and session save/`--resume`.
 
+Install once and get **two real CLI commands** — `recc` (inspector) and `recc-agent` (the clone):
+
 ```bash
-cd agent && pip install anthropic
-export ANTHROPIC_API_KEY=sk-ant-...        # your own key
-python3 recc_agent.py "add a --version flag to cli.py"   # one-shot
-python3 recc_agent.py                       # interactive REPL
-python3 recc_agent.py --resume              # continue last session
+pip install -e .                            # from the repo root
+export ANTHROPIC_API_KEY=sk-ant-...         # your own key
+
+recc-agent "add a --version flag to cli.py" # one-shot
+recc-agent                                  # interactive REPL
+recc-agent --resume                         # continue last session
+recc-agent --model claude-haiku-4-5 --yolo  # cheap + auto-approve
+
+recc tokens ./prompt.md                     # inspector still there
+recc cost ~/.claude/projects/*/*.jsonl
 ```
+
+(No install needed to try it: `python3 agent/recc_agent.py "..."` works from source too.)
 
 See [`agent/README.md`](agent/README.md). It calls the **official API with your own key** —
 it is a learning-grade clone of *how Claude Code is built*, not a way to use Claude for free.
