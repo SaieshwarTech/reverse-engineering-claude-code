@@ -100,6 +100,25 @@ recc proxy                           # run a logging proxy; point ANTHROPIC_BASE
 
 See [`tool/README.md`](tool/README.md) for details. The tool never bypasses billing or authentication — it *observes* your own usage so you can understand and optimize it.
 
+## 🤖 The Agent — a working Claude Code clone
+
+`recc-agent` is a real, runnable terminal coding agent in a single file — the guide's
+chapter 7 mini-agent grown into something usable. It has the agent loop, a full tool layer
+(`read_file`/`write_file`/`edit_file`/`bash`/`grep`/`glob`), a permission system with
+hard-blocked dangerous commands, streaming output, `CLAUDE.md` context, a live token/cost
+meter, and session save/`--resume`.
+
+```bash
+cd agent && pip install anthropic
+export ANTHROPIC_API_KEY=sk-ant-...        # your own key
+python3 recc_agent.py "add a --version flag to cli.py"   # one-shot
+python3 recc_agent.py                       # interactive REPL
+python3 recc_agent.py --resume              # continue last session
+```
+
+See [`agent/README.md`](agent/README.md). It calls the **official API with your own key** —
+it is a learning-grade clone of *how Claude Code is built*, not a way to use Claude for free.
+
 ## 🔬 Observe it yourself
 
 You don't have to take this guide's word for anything:
