@@ -1,0 +1,26 @@
+{
+  "name": "recc-cli",
+  "version": "0.1.0",
+  "description": "Reverse-Engineer Claude Code: an open-source Claude Code clone (recc-agent) with Telegram/WhatsApp/email bridges, plus an inspector (recc). npm wrapper over the Python package.",
+  "keywords": ["claude", "claude-code", "ai-agent", "coding-agent", "cli", "telegram", "whatsapp"],
+  "license": "MIT",
+  "homepage": "https://github.com/SaieshwarTech/reverse-engineering-claude-code",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaieshwarTech/reverse-engineering-claude-code.git"
+  },
+  "bin": {
+    "recc": "bin/run.js",
+    "recc-agent": "bin/run.js",
+    "recc-bridge": "bin/run.js",
+    "recc-mail": "bin/run.js",
+    "recc-whatsapp": "bin/run.js"
+  },
+  "scripts": {
+    "postinstall": "node bin/install.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": ["bin/"]
+}

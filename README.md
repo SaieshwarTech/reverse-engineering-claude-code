@@ -43,12 +43,20 @@ Claude Code ships as an obfuscated bundle, but its behavior, its open-source fou
 Install once, get two commands: **`recc-agent`** (the clone) and **`recc`** (the inspector).
 
 ```bash
-git clone https://github.com/SaieshwarTech/reverse-engineering-claude-code
-cd reverse-engineering-claude-code
-pip install -e .
+# via pip (Python)
+pip install "recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"
+
+# or via npm (wrapper over the Python package; needs Python 3.9+)
+npm install -g recc-cli
+
 export ANTHROPIC_API_KEY=sk-ant-...     # your own key
 recc-agent
 ```
+
+You get five commands: **`recc-agent`** (terminal clone), **`recc`** (inspector), and three
+OpenClaw-style chat channels — **`recc-bridge`** (Telegram), **`recc-mail`** (Gmail/IMAP),
+**`recc-whatsapp`** (Meta Cloud API). Host them online with the included `Dockerfile` — see
+[chapter 13](docs/13-deploy.md).
 
 **What `recc-agent` looks like:**
 
@@ -77,12 +85,13 @@ recc-agent
 ╰───────────────────────────────────────────────────────────────╯
 ```
 
-**Talk to it from your phone** — `recc-bridge` connects the agent to Telegram, [OpenClaw](https://openclaw.ai/)-style. Safe by default (read-only); opt into writes explicitly. See [chapter 12](docs/12-chat-bridge.md).
+**Talk to it from your phone** — [OpenClaw](https://openclaw.ai/)-style chat channels, all over the same agent loop. Safe by default (read-only); opt into writes explicitly; always lock to yourself. See [chapter 12](docs/12-chat-bridge.md) and [chapter 13](docs/13-deploy.md).
 
 ```bash
-export TELEGRAM_BOT_TOKEN=...   # from @BotFather
-recc-bridge                     # read-only assistant
-recc-bridge --allow-writes --allow-chat <your-id>   # full access, locked to you
+recc-bridge   --allow-chat <id>                 # Telegram  (TELEGRAM_BOT_TOKEN)
+recc-mail     --allow-from you@gmail.com         # Email     (EMAIL_USER/EMAIL_PASS)
+recc-whatsapp --allow-from 15551234567           # WhatsApp  (WHATSAPP_TOKEN/PHONE_ID)
+# add --allow-writes to let it edit files / run shell (careful!)
 ```
 
 <table>
@@ -200,7 +209,8 @@ flowchart LR
 | 9 | [State on Disk](docs/09-state-on-disk.md) | Dissecting `~/.claude/`: settings, JSONL transcripts, memory |
 | 10 | [Methodology](docs/10-methodology.md) | How to reverse-engineer *any* AI agent, legally |
 | 11 | [Glossary & Reference](docs/11-glossary.md) | Every term, plus a "verify any claim" cheat sheet |
-| 12 | [The Chat Bridge](docs/12-chat-bridge.md) | An OpenClaw-style Telegram assistant over the same loop |
+| 12 | [The Chat Bridge](docs/12-chat-bridge.md) | OpenClaw-style Telegram/WhatsApp/email assistants over one loop |
+| 13 | [Hosting It Online](docs/13-deploy.md) | systemd, Docker, PaaS, tunnels — running the channels 24/7 |
 
 <h2 id="observe-it-yourself">Observe it yourself</h2>
 
