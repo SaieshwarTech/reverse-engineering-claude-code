@@ -232,12 +232,29 @@ You don't have to take this guide's word for anything:
 
 <p>
   <img alt="Python" src="https://img.shields.io/badge/Python-3B82F6?style=for-the-badge&logo=python&logoColor=white&labelColor=09090B">
-  <img alt="Anthropic SDK" src="https://img.shields.io/badge/Anthropic%20SDK-14b8a6?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=09090B">
+  <img alt="Anthropic" src="https://img.shields.io/badge/Anthropic-14b8a6?style=for-the-badge&logo=anthropic&logoColor=white&labelColor=09090B">
   <img alt="Mermaid" src="https://img.shields.io/badge/Mermaid-a78bfa?style=for-the-badge&logo=mermaid&logoColor=white&labelColor=09090B">
   <img alt="Markdown" src="https://img.shields.io/badge/Markdown-22d3ee?style=for-the-badge&logo=markdown&logoColor=white&labelColor=09090B">
 </p>
 
+**Integrates with** — the chat channels talk to these platforms' official APIs, with your own credentials:
+
+<p>
+  <img alt="Telegram" src="https://img.shields.io/badge/Telegram-26A5E4?style=for-the-badge&logo=telegram&logoColor=white&labelColor=09090B">
+  <img alt="WhatsApp / Meta" src="https://img.shields.io/badge/WhatsApp%20%2F%20Meta-25D366?style=for-the-badge&logo=whatsapp&logoColor=white&labelColor=09090B">
+  <img alt="Gmail / Google" src="https://img.shields.io/badge/Gmail%20%2F%20Google-EA4335?style=for-the-badge&logo=gmail&logoColor=white&labelColor=09090B">
+  <img alt="Docker" src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white&labelColor=09090B">
+  <img alt="PyPI" src="https://img.shields.io/badge/PyPI-3775A9?style=for-the-badge&logo=pypi&logoColor=white&labelColor=09090B">
+  <img alt="npm" src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white&labelColor=09090B">
+  <img alt="GitHub Actions" src="https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white&labelColor=09090B">
+</p>
+
 - **[anthropic](https://pypi.org/project/anthropic/)** — official Python SDK, the only runtime dependency.
+- **Telegram Bot API** — `recc-bridge` (ch. 12).
+- **Meta WhatsApp Cloud API** — `recc-whatsapp` (ch. 12); needs a Meta developer app.
+- **Gmail / any IMAP+SMTP provider** — `recc-mail` (ch. 12); stdlib only, no Google API key needed.
+- **Docker** — the included `Dockerfile`, for hosting the channels 24/7 (ch. 13).
+- **PyPI & npm** — target registries for `recc-cli`; see [`PUBLISHING.md`](PUBLISHING.md).
 - The zero-dependency stdlib powers the inspector and the logging proxy.
 
 <h2 id="contributing">Contributing</h2>
