@@ -11,8 +11,9 @@ The terminal agent runs on demand, but the chat channels (`recc-bridge`, `recc-m
 
 | Method | Command |
 |--------|---------|
-| pip (Python) | `pip install "recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"` |
-| npm (wrapper) | `npm i -g recc-cli` (shells out to the Python package; needs Python 3.9+) |
+| pip, from source | `pip install "git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"` |
+| pip, once published | `pip install recc-cli` |
+| npm, once published | `npm i -g recc-cli` (shells out to the PyPI package; needs Python 3.9+) |
 | Docker | `docker build -t recc . && docker run ... recc recc-bridge` |
 
 ## 1. systemd (your own Linux box / VPS)

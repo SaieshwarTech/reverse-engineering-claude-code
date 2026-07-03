@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="assets/logo.png" alt="recc logo" width="140" />
+
 <a href="https://github.com/SaieshwarTech/reverse-engineering-claude-code">
   <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=700&size=30&pause=1000&color=3B82F6&center=true&vCenter=true&width=760&height=70&lines=Reverse+Engineering+Claude+Code;How+a+coding+agent+actually+works;Read+the+guide.+Run+the+clone." alt="Reverse Engineering Claude Code" />
 </a>
@@ -40,13 +42,18 @@ Claude Code ships as an obfuscated bundle, but its behavior, its open-source fou
 
 <h2 id="the-cli">The CLI</h2>
 
-Install once, get two commands: **`recc-agent`** (the clone) and **`recc`** (the inspector).
+Install straight from GitHub today; the package name **`recc-cli`** is reserved on both
+PyPI and npm (verified available 2026-07-03) and publishing is documented in
+[`PUBLISHING.md`](PUBLISHING.md) — once it's live, `pip install recc-cli` / `npm i -g recc-cli` resolve directly, no source needed.
 
 ```bash
-# via pip (Python)
-pip install "recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"
+# pip, from source (works today)
+pip install "git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"
 
-# or via npm (wrapper over the Python package; needs Python 3.9+)
+# pip, once published to PyPI
+pip install recc-cli
+
+# npm, once published (wrapper over the PyPI package; needs Python 3.9+ on PATH)
 npm install -g recc-cli
 
 export ANTHROPIC_API_KEY=sk-ant-...     # your own key

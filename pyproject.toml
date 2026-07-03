@@ -3,18 +3,28 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "recc"
+name = "recc-cli"
 version = "0.1.0"
-description = "Reverse-Engineer Claude Code: an open-source Claude Code clone (recc-agent) plus an inspector CLI (recc)."
+description = "Reverse-Engineer Claude Code: an open-source Claude Code clone (recc-agent) plus an inspector CLI (recc) and Telegram/WhatsApp/email chat bridges."
 readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [{ name = "Saieshwar" }]
-keywords = ["claude", "claude-code", "ai-agents", "llm", "cli", "coding-agent"]
+keywords = ["claude", "claude-code", "ai-agents", "llm", "cli", "coding-agent", "telegram", "whatsapp"]
 dependencies = ["anthropic>=0.40.0"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Build Tools",
+]
 
 [project.urls]
 Homepage = "https://github.com/SaieshwarTech/reverse-engineering-claude-code"
+Repository = "https://github.com/SaieshwarTech/reverse-engineering-claude-code"
+Issues = "https://github.com/SaieshwarTech/reverse-engineering-claude-code/issues"
 
 [project.scripts]
 recc = "recc_cli.inspector:main"

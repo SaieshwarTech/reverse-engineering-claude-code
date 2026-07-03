@@ -13,15 +13,14 @@ function python() {
 const py = python();
 if (!py) {
   console.warn("[recc-cli] Python 3.9+ not found. Install it, then run:\n" +
-               "  pip install 'recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code'");
+               "  pip install recc-cli");
   process.exit(0); // don't fail the npm install
 }
-console.log("[recc-cli] installing the Python package…");
-const r = spawnSync(py, ["-m", "pip", "install", "--user",
-  "recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code"],
+console.log("[recc-cli] installing the Python package (recc-cli) via pip…");
+const r = spawnSync(py, ["-m", "pip", "install", "--user", "recc-cli"],
   { stdio: "inherit" });
 if (r.status !== 0) {
   console.warn("[recc-cli] pip install did not complete. Run it manually:\n" +
-               "  pip install 'recc @ git+https://github.com/SaieshwarTech/reverse-engineering-claude-code'");
+               "  pip install recc-cli");
 }
 process.exit(0);
