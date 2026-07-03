@@ -251,15 +251,19 @@ Contributions are welcome — new chapters, agent features (subagents, prompt ca
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full guide and good first issues.
 
-### Contributors
+### Roadmap
 
-Every contributor shows up here automatically:
+- [x] 13-chapter guide: architecture, agent loop, tools, context, permissions, subagents, wire format, disk state, methodology
+- [x] `recc-agent` — a working terminal clone (loop, tools, permissions, streaming, sessions)
+- [x] `recc` — inspector CLI (tokens, cost, sessions, proxy)
+- [x] Chat channels — Telegram, Gmail/IMAP, WhatsApp Cloud API
+- [x] Docker image + hosting guide (systemd, Compose, PaaS, tunnels)
+- [ ] Discord channel
+- [ ] Subagents in `recc-agent` (context-isolated task delegation)
+- [ ] Prompt caching in `recc-agent` (cost/latency win)
+- [ ] Publish to PyPI + npm as `recc-cli` (see [`PUBLISHING.md`](PUBLISHING.md))
 
-<a href="https://github.com/SaieshwarTech/reverse-engineering-claude-code/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=SaieshwarTech/reverse-engineering-claude-code" alt="Contributors" />
-</a>
-
-<sub>Be the first — the [good first issues](https://github.com/SaieshwarTech/reverse-engineering-claude-code/issues) are a great place to start.</sub>
+Pick one up — see [`CONTRIBUTING.md`](CONTRIBUTING.md) for how.
 
 ## Acknowledgements
 
