@@ -77,6 +77,14 @@ recc-agent
 ╰───────────────────────────────────────────────────────────────╯
 ```
 
+**Talk to it from your phone** — `recc-bridge` connects the agent to Telegram, [OpenClaw](https://openclaw.ai/)-style. Safe by default (read-only); opt into writes explicitly. See [chapter 12](docs/12-chat-bridge.md).
+
+```bash
+export TELEGRAM_BOT_TOKEN=...   # from @BotFather
+recc-bridge                     # read-only assistant
+recc-bridge --allow-writes --allow-chat <your-id>   # full access, locked to you
+```
+
 <table>
 <tr><td><b>recc-agent</b> — the clone</td><td><b>recc</b> — the inspector</td></tr>
 <tr valign="top"><td>
@@ -192,6 +200,7 @@ flowchart LR
 | 9 | [State on Disk](docs/09-state-on-disk.md) | Dissecting `~/.claude/`: settings, JSONL transcripts, memory |
 | 10 | [Methodology](docs/10-methodology.md) | How to reverse-engineer *any* AI agent, legally |
 | 11 | [Glossary & Reference](docs/11-glossary.md) | Every term, plus a "verify any claim" cheat sheet |
+| 12 | [The Chat Bridge](docs/12-chat-bridge.md) | An OpenClaw-style Telegram assistant over the same loop |
 
 <h2 id="observe-it-yourself">Observe it yourself</h2>
 

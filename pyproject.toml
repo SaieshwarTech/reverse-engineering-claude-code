@@ -19,6 +19,7 @@ Homepage = "https://github.com/SaieshwarTech/reverse-engineering-claude-code"
 [project.scripts]
 recc = "recc_cli.inspector:main"
 recc-agent = "recc_cli.agent:main"
+recc-bridge = "recc_cli.bridge:main"
 
 [tool.setuptools]
 packages = ["recc_cli"]
